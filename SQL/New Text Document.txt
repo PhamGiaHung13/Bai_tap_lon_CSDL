@@ -1,0 +1,38 @@
+-- ============================================================================
+-- FILE 5: KỊCH BẢN CHẠY DEMO (KHÁCH MỚI - NHÂN VIÊN MỚI)
+-- ============================================================================
+USE QuanLyNhaHang;
+GO
+
+-----------------------------------------------------------
+-- 1. THÊM KHÁCH HÀNG MỚI
+-----------------------------------------------------------
+EXEC sp_ThemKhachHang N'Phạm Gia Bình', '0966123456';
+
+-----------------------------------------------------------
+-- 2. QUY TRÌNH PHỤC VỤ (ĐƠN HÀNG SỐ 5)
+-----------------------------------------------------------
+
+-- MỞ BÀN: EXEC sp_MoBanMoi @MaBan, @MaNV, @MaKH
+EXEC sp_MoBanMoi 6, 2, 5;
+
+-- GỌI MÓN: EXEC sp_GoiMon @MaDon, @MaMon, @SoLuong
+EXEC sp_GoiMon 5, 11, 1; 
+EXEC sp_GoiMon 5, 6, 2;
+
+
+-- THANH TOÁN: EXEC sp_ThanhToan @MaKH, @PhuongThuc
+EXEC sp_ThanhToan 5, N'Tiền mặt';
+
+-----------------------------------------------------------
+-- 3. KIỂM TRA DỮ LIỆU SAU KHI CHẠY
+-----------------------------------------------------------
+
+-- Xem lại hóa đơn vừa thanh toán 
+SELECT * FROM Bills WHERE order_id = 5;
+
+-- Kiểm tra xem Bàn số 6 đã tự động trả về 'Available' chưa
+SELECT * FROM Tables WHERE table_id = 6;
+
+-- Xem danh sách đơn hàng 
+SELECT * FROM Orders;
